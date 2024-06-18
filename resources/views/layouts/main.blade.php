@@ -7,10 +7,12 @@
 @section('body')
     <div class="container">
         <div class="row">
-            <div class="col-4">
-                @include('blocks.sidebar')
+            <div class="col">
+                @include('blocks.header')
             </div>
-            <div class="col-8">
+        </div>
+        <div class="row">
+            <div class="col">
                 @yield('main')
             </div>
         </div>
