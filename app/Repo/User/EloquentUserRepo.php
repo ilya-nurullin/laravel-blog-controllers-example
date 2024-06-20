@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repo;
+namespace App\Repo\User;
 
 use App\Models\User;
 
-class UserRepo
+class EloquentUserRepo implements UserRepo
 {
     public function getAllAuthors()
     {

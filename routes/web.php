@@ -24,3 +24,8 @@ Route::group(['prefix' => '/posts/{post}/comments'], function () {
     Route::post('/{comment}/reply', [CommentController::class, 'reply'])->name('comments.reply');
     Route::post('/add', [CommentController::class, 'addToPost'])->name('comments.addToPost');
 });
+
+Route::get('/int', function (){
+    dump(app('error'));
+    return "ok";
+});

@@ -6,8 +6,10 @@ use App\DTO\Post\CreatePostDTO;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
-use App\Repo\PostsRepo;
-use App\Repo\UserRepo;
+use App\Models\User;
+use App\Repo\Post\PostRepo;
+use App\Repo\User\UserRepo;
+use App\Services\Notification\PostNotificationTopics;
 use App\Services\PostService;
 
 class PostController extends Controller
@@ -15,7 +17,7 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(PostsRepo $postsRepo)
+    public function index(PostRepo $postsRepo)
     {
         $posts = $postsRepo->getAllPosts();
         return view('pages.posts.list', compact('posts'));
@@ -35,11 +37,15 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request,
                           UserRepo $userRepo,
-                          PostService $postService)
+                          PostService $postService,
+                          PostNotificationTopics $postNotificationTopics,
+    )
     {
         $author = $userRepo->findAuthor($request->author_id);
         $newPostDTO = new CreatePostDTO($author, $request->title, $request->text);
         $newPost = $postService->create($newPostDTO);
+
+        $postNotificationTopics->newPostNotification(User::find(1), $newPost);
 
         return redirect()->route('posts.index')
             ->with('new_post_id', $newPost->id);

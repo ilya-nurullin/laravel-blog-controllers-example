@@ -6,9 +6,8 @@ use App\DTO\Comment\NewCommentDTO;
 use App\Http\Requests\NewCommentRequest;
 use App\Models\Comment;
 use App\Models\Post;
-use App\Repo\UserRepo;
+use App\Repo\User\UserRepo;
 use App\Services\CommentService;
-use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {

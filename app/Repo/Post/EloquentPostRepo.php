@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repo;
+namespace App\Repo\Post;
 
 use App\Models\Post;
 
-class PostsRepo
+class EloquentPostRepo implements PostRepo
 {
     public function getAllPosts()
     {
