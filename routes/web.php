@@ -1,17 +1,22 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Posts\ConfirmDeleteController;
 use App\Http\Middleware\CheckQ;
+use App\Http\Middleware\CheckReq;
+use App\Http\Middleware\EnhanceReq;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use Monolog\Handler\RotatingFileHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
@@ -52,4 +57,15 @@ Route::get('/f', function (){
 <button>Send</button>
 </form>
     ';
+});
+
+Auth::routes();
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::get('/w', fn(Request $request) => ['status' => 'ok', 'api_token' => $request->get('token')]);
+//    ->middleware([EnhanceReq::class, 'check_req:gsdfg!!!']);
+
+Route::middleware('check_role:admin')->prefix('admin')->group(function () {
+    Route::get('/show',  fn () => 'admins only');
 });
