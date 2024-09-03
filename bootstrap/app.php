@@ -3,6 +3,7 @@
 use App\Http\Middleware\ChechRoute;
 use App\Http\Middleware\CheckReq;
 use App\Http\Middleware\EnhanceReq;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -14,17 +15,17 @@ return Application::configure(basePath: dirname(__DIR__))
 //        health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->priority([
-           CheckReq::class,
-           EnhanceReq::class,
-        ]);
+//        $middleware->priority([
+//           CheckReq::class,
+//           EnhanceReq::class,
+//        ]);
+////
+//        $middleware->prepend(CheckReq::class.':adsfsafd,second_param');
+//        $middleware->append(EnhanceReq::class);
 //
-        $middleware->prepend(CheckReq::class.':adsfsafd,second_param');
-        $middleware->append(EnhanceReq::class);
-
-        $middleware->alias(['check_req' => CheckReq::class,
-            'check_role' => ChechRoute::class
-        ]);
+//        $middleware->alias(['check_req' => CheckReq::class,
+//            'check_role' => ChechRoute::class
+//        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
